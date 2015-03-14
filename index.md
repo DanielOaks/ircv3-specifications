@@ -40,6 +40,7 @@ Core
 
 * [Client Capability Negotiation](specification/capability-negotiation-3.2.html)
 * [Message Tags](specification/message-tags-3.2.html)
+* [Metadata](specification/metadata-3.2.html)
 * [MONITOR](specification/monitor-3.2.html) - Protocol for notification of when clients become online/offline
 
 Extensions
