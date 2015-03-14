@@ -18,12 +18,19 @@ h3 { font-size: 1rem; border-bottom: 1px #999 dashed; color: #048; }
 
 body { background: #fcfcfc; line-height: 1.2; }
 
-#header { margin-bottom: 1rem; padding-bottom: 0.3rem; border-bottom: 0.1rem #496c8e solid; }
+#header { margin-bottom: 1rem; border-bottom: 0.1rem #496c8e solid; }
 #header h1 { border-bottom: none; }
 #header h1 a { font-style: normal; }
 #header nav { margin-top: 0.25rem; }
+#header nav > ul, #header nav > ul > li { padding: 0; margin: 0; list-style: none; }
+#header nav > ul > li { display: inline-block; position: relative; padding-bottom: 0.3rem; }
+#header nav > ul > li + li { margin-left: 0.8rem; }
+#header nav > ul > li > ul { position: absolute; left: -0.3rem; top: 1.5rem; display: none; background: #fcfcfc; border-radius: 0 0 0.3rem 0.3rem; list-style: none; border: 0.1rem #496c8e solid; padding: 0; }
+#header nav > ul > li > ul:hover { display: block; }
+#header nav > ul > li > ul li a { display: block; padding: 1rem 1.3rem; }
+#header nav > ul > li > ul li + li a { padding-top: 0.1rem; }
+#header nav > ul > li:hover > ul { display: block; }
 #header nav a { font-style: normal; }
-#header nav a + a { margin-left: 0.8rem; }
 
 #content { padding: 0 0 4.25rem; }
 
