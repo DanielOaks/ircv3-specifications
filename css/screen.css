@@ -13,6 +13,9 @@ h2 { font-size: 1.15rem; border-bottom: 1px #999 dashed; color: #048; }
 
 h3 { font-size: 1rem; border-bottom: 1px #999 dashed; color: #048; }
 
+.flexy-list { max-width: 60rem; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-around; align-items: stretch; align-content: center; }
+.flexy-list .participant { padding: 0.5rem; min-width: 12%; text-align: center; }
+
 body { background: #fcfcfc; line-height: 1.2; }
 
 #header { margin-bottom: 1rem; padding-bottom: 0.3rem; border-bottom: 0.1rem #496c8e solid; }

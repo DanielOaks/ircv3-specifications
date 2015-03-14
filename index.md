@@ -13,19 +13,14 @@ Please also read our [charter](charter.html) before participating.
 
 The IRCv3 working group contains participants from the following organizations (and more):
 
-* [atheme.org](http://www.atheme.org/)
-* [Bitchx](http://www.bitchx.ca/)
-* [EsperNet](http://www.esper.net/)
-* [freenode](http://www.freenode.net/)
-* [InspIRCd](http://www.inspircd.org/)
-* [IRCCloud](https://www.irccloud.com/)
-* [Mibbit](http://www.mibbit.com/)
-* [mIRC](http://www.mirc.co.uk/)
-* [Nefarious IRCd](https://github.com/evilnet/nefarious/wiki)
-* [ngIRCd](http://ngircd.barton.de/)
-* [Undernet](http://www.undernet.org/)
-* [UnrealIRCd](http://www.unrealircd.org/)
-* [ZNC](http://znc.in/)
+<!-- {% for participant in site.data.participants %}
+* [{{ participant.name }}]({{ participant.url }}){% endfor %} -->
+
+<div class="flexy-list">
+{% for participant in site.data.participants %}
+<a class="participant" href="{{ participant.url }}">{{ participant.name }}</a>
+{% endfor %}
+</div>
 
 To participate, contribute to our specifications and extensions registry on [GitHub](http://github.com/ircv3/ircv3-specifications).
 
