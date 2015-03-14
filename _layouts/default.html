@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+    <head>
+        <title>{{ page.title }}</title>
+        
+        <!-- Homepage CSS -->
+        <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <link href="/css/print.css" media="print" rel="stylesheet" type="text/css" />
+        <!--[if IE]>
+            <link href="/css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <![endif]-->
+
+        <meta charset='utf-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    </head>
+    <body>
+        <div id="container">
+            <div id="header">
+                <h1>IRCv3 Working Group</h1>
+                <subtitle>
+                    A group of IRC client and server software authors working to enhance, improve, maintain and standardize the current IRC protocol.
+                </subtitle>
+            </div>
+            
+            <div id="content"{% if page.page_type %} class="{{ page.page_type }}"{% endif %}>
+                {{ content }}
+            </div>
+        </div>
+        <div id="footer">
+            © IRCv3 Working Group
+        </div>
+    </body>
+</html>
