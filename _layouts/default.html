@@ -15,19 +15,24 @@
     </head>
     <body>
         <div id="container">
-            <div id="header">
-                <h1>IRCv3 Working Group</h1>
-                <subtitle>
-                    A group of IRC client and server software authors working to enhance, improve, maintain and standardize the current IRC protocol.
-                </subtitle>
-            </div>
+            <div id="header"><div>
+                <h1><a href="{{ site.root_url }}/index.html">IRCv3 Working Group</a></h1>
+                <nav>
+                    <a href="{{ site.root_url }}/index.html#content">About</a>
+                    <a href="{{ site.root_url }}/charter.html">Charter</a>
+                    <a href="{{ site.root_url }}/index.html#specifications">Specs</a>
+                    <a href="{{ site.root_url }}/index.html#additional-documentation">Docs</a>
+                    <a href="{{ site.root_url }}/index.html#ircv31-compliant-software">Support</a>
+                    <a href="{{ site.root_url }}/charter.html#resources">Discuss</a>
+                </nav>
+            </div></div>
             
             <div id="content"{% if page.page_type %} class="{{ page.page_type }}"{% endif %}>
                 {{ content }}
             </div>
         </div>
-        <div id="footer">
+        <div id="footer"><div>
             © IRCv3 Working Group
-        </div>
+        </div></div>
     </body>
 </html>
