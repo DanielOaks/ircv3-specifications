@@ -1,7 +1,7 @@
 ---
 title: IRCv3.2 Metadata
 layout: spec
-deprecated: true
+deprecated: This specification has issues around rate limiting and notifications. We recommend waiting for the IRCv3.3 Metadata specification to be released instead, which solves these issues.
 copyrights:
   -
     name: "Kiyoshi Aman"
