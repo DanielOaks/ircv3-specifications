@@ -78,9 +78,9 @@ This message, sent from a server to a client, indicates that a `RESUME` request 
 #### `RESUMED` Message
 This message is sent by the server to indicate that another client has reconnected:
 
-    :nick!olduser@oldhost RESUMED <host> [timestamp]
+    :nick!user@oldhost RESUMED <host> [timestamp]
 
-`<nick>`, `<olduser>`, and `<oldhost>` indicate the client that has reconnected, and are the details of the old client. `<host>` indicates the reconnecting client's new hostname, and the receiving client MUST process this information as they would a regular [`CHGHOST`](https://ircv3.net/specs/extensions/chghost-3.2.html) message. `<timestamp>`, if given, is a timestamp of the form described above which indicates the last message received by the reconnecting clent.
+`<nick>` and `<oldhost>` indicate the client that has reconnected, and are the details of the old client. `<host>` indicates the reconnecting client's new hostname, and the receiving client MUST process this information as they would from a regular [`CHGHOST`](https://ircv3.net/specs/extensions/chghost-3.2.html) message. `<timestamp>`, if given, is a timestamp of the form described above which indicates the last message received by the reconnecting clent.
 
 Upon receiving a `RESUMED` message, clients SHOULD display in some way that the given user has reconnected (as message history may have been lost and the users' chat may have been interrupted). If `<timestamp>` is given, clients SHOULD use this to display how much message history seems to have been lost.
 
@@ -184,7 +184,7 @@ This approach is recommended as it protects against timing attacks. Implementers
 ## Examples
 
 ### Successful Resumption
-Successful `RESUME` attempt from a client with the nick `dan` reconnecting. The nickname the new client is connecting with is `dan-backup-nick`. The old connection used the username `~old` and the host `192.168.0.5`, and the new connection has the username `~d` and the host `10.0.0.3`:
+Successful `RESUME` attempt from a client with the nick `dan` reconnecting. The nickname the new client is connecting with is `dan-backup-nick`. The old connection used the username `~u` and the host `192.168.0.5`, and the new connection has the username `~d` and the host `10.0.0.3`:
 
     C1 - C: PING 12345678
     C1 - S: :irc.example.com PONG 12345678
@@ -205,7 +205,7 @@ Successful `RESUME` attempt from a client with the nick `dan` reconnecting. The 
     C2 - S: :irc.example.com 001 dan :Welcome to the Internet Relay Network dan
     ... C2 receives regular registration burst ...
     C2 - S: :irc.example.com 376 dan :End of MOTD command
-    C2 - S: :dan!~old@127.0.0.1 JOIN #test
+    C2 - S: :dan!~u@10.0.0.3 JOIN #test
     C2 - S: :irc.example.com 332 dan #test :Example topic
     C2 - S: :irc.example.com 333 dan #test george 1442060874
     C2 - S: :irc.example.com 353 dan @ #test :@dan @george +violet roger
@@ -213,8 +213,8 @@ Successful `RESUME` attempt from a client with the nick `dan` reconnecting. The 
 
 Here is this successful reconnection seen by `george`, a client that does not have the `draft/resume-0.4` capability enabled:
 
-    S: :dan!~old@192.168.0.5 QUIT :Client reconnected (24 seconds of message history lost)
-    S: :dan!~old@127.0.0.1 JOIN #test
+    S: :dan!~u@192.168.0.5 QUIT :Client reconnected (24 seconds of message history lost)
+    S: :dan!~u@10.0.0.3 JOIN #test
     S: :irc.example.com MODE #test +o dan
 
 And here is this reconnection seen by `violet`, a client that has the `draft/resume-0.4` capability:
