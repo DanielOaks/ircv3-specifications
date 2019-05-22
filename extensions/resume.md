@@ -68,10 +68,20 @@ If the request is unsuccessful, the server returns a `FAIL RESUME` message with 
 
 If a client receives a `FAIL RESUME` message, regardless of the code, then they MUST abort the resume attempt and connect to the server normally instead.
 
-#### `RESUME` Message
-This message, sent from a server to a client, indicates that a `RESUME` request has been successful.
+If the request is successful, the server may also send a `WARN RESUME` message with one of the codes below using the given format, including an appropriate description of the warning:
 
-    RESUME <oldnick>
+| Code | Format |
+| ---- | ------ |
+| `HISTORY_LOST` | `:<server> WARN RESUME HISTORY_LOST :Up to 30 seconds of history may have been lost` |
+
+#### `RESUME` Message
+This message is sent from the server to the client and has two forms, `RESUME TOKEN` and `RESUME SUCCESS`. `RESUME TOKEN` is used as described above, to communicate the resume token to the client after the client's first negotiation of the `draft/resume-0.4` capability:
+
+    RESUME TOKEN <token>
+
+The second form is `RESUME SUCCESS`, sent to indicate that a `RESUME` request has been successful:
+
+    RESUME SUCCESS <oldnick>
 
 `<oldnick>` is the nickname of the session being resumed. After receiving this message, the client MUST assume that this is their nickname.
 
@@ -143,7 +153,7 @@ On a successful request, the server:
 4. Replays the client's session to the new client.
 5. Sends `RESUMED` or `QUIT`+`JOIN` messages to other clients as appropriate.
 6. Sends clients that have the reconnecting user `MONITOR`'d one `RPL_MONOFFLINE` numeric and one `RPL_MONONLINE` numeric indicating that the user has reconnected. The timestamps on both these messages, if sent, SHOULD be the current time.
-7. If message history could not be replayed (because it is not stored, or for any other reason), sends the new client a `RESUME WARN` message making them aware of this.
+7. If message history could not be replayed (because it is not stored, or for any other reason), sends the new client a `WARN RESUME HISTORY_LOST` message making them aware of this.
 
 On a successful request, the session information that MUST be applied from the old client and replayed includes, but is not limited to:
 
