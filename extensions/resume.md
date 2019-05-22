@@ -66,7 +66,7 @@ If the request is unsuccessful, the server returns a `FAIL RESUME` message with 
 | `REGISTRATION_IS_COMPLETED` | `:<server> FAIL RESUME REGISTRATION_IS_COMPLETED :Cannot resume connection, connection registration has completed` |
 | `CANNOT_RESUME` | `:<server> FAIL RESUME CANNOT_RESUME :Cannot resume connection, for a different reason described here` |
 
-If a client receives a `FAIL RESUME` message, regardless of the code, then they MUST abort the resume attempt and connect to the server normally instead.
+If a client receives a `FAIL RESUME` message with a code other than `INVALID_TOKEN`, then they MUST abort the resume attempt and connect to the server normally instead. If they receive a `FAIL RESUME` message with code `INVALID_TOKEN`, then they MAY submit a different candidate token (in case of doubt as to whether a previous `RESUME` attempt was accepted), or else abort the resume attempt and connect normally.
 
 If the request is successful, the server may also send a `WARN RESUME` message with one of the codes below using the given format, including an appropriate description of the warning:
 
@@ -295,6 +295,8 @@ When clients see a `RESUMED` message for another client which contains a timesta
 A client that disconnects and reconnects to the server should explicitly display the reconnection, even if they're able to resume successfully. This is so that the user knows why they may be missing message history and similar issues.
 
 Servers may wish to check the new hostmask of resuming clients, to ensure that it does not fall under their list of banned hosts or hostmasks.
+
+In case of network instability, a client may be uncertain which token to submit. For example, if the client attempted to resume, received a new token, submitted the old token, and then lost their connection again without receiving a response, the client will be uncertain whether the token was accepted and processed (in which case further `RESUME` attempts should use the new token) or whether it was never received (in which case further `RESUME` attempts should retransmit the old token). In this case, the client may wish to respond to `INVALID_TOKEN` by trying a different token. Although the server must choose cryptographically secure tokens that are intractable for a client to guess by means of repeated `RESUME` attempts, they may wish to restrict the total number of attempts allowed (per client connection) for performance or security hardening reasons, or even allow a maximum of one attempt.
 
 
 ## Security Considerations
