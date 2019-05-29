@@ -49,11 +49,11 @@ Capability negotiation example:
 #### `RESUME` Command
 This command, sent from a client to a server, indicates that the client wishes to resume their old session. This command MAY ONLY be sent during connection registration.
 
-    RESUME <token> [timestamp]
+    RESUME <token> <timestamp>
 
 `<token>` is the old connection's resume token.
 
-`<timestamp>`, if given, is a timestamp indicating when the client received the last message from the server on the old connection. This timestamp uses the same format as the IRCv3 `server-time` extension (i.e. `YYYY-MM-DDThh:mm:ss.sssZ`, or in UTC using extended format as specified by ISO 8601:2004(E) 4.3.2), and is passed to other clients to indicates how long the disconnection lasted.
+`<timestamp>` is a timestamp indicating the last time at which the client was able to receive messages from the server on the old connection. This timestamp uses the same format as the IRCv3 `server-time` extension (i.e. `YYYY-MM-DDThh:mm:ss.sssZ`, or in UTC using extended format as specified by ISO 8601:2004(E) 4.3.2), and is passed to other clients to indicates how long the disconnection lasted.
 
 If the request is successful, the server returns a `RESUME` message as described below, registration immediately completes, and the server begins replaying the current client state.
 
@@ -88,11 +88,11 @@ The second form is `RESUME SUCCESS`, sent to indicate that a `RESUME` request ha
 #### `RESUMED` Message
 This message is sent by the server to indicate that another client has reconnected:
 
-    :nick!user@oldhost RESUMED <host> [timestamp]
+    :nick!user@oldhost RESUMED <host> <timestamp>
 
-`<nick>` and `<oldhost>` indicate the client that has reconnected, and are the details of the old client. `<host>` indicates the reconnecting client's new hostname, and the receiving client MUST process this information as they would from a regular [`CHGHOST`](https://ircv3.net/specs/extensions/chghost-3.2.html) message. `<timestamp>`, if given, is a timestamp of the form described above which indicates the last message received by the reconnecting clent.
+`<nick>` and `<oldhost>` indicate the client that has reconnected, and are the details of the old client. `<host>` indicates the reconnecting client's new hostname, and the receiving client MUST process this information as they would from a regular [`CHGHOST`](https://ircv3.net/specs/extensions/chghost-3.2.html) message. `<timestamp>` is a timestamp of the form described above which indicates the last message received by the reconnecting clent.
 
-Upon receiving a `RESUMED` message, clients SHOULD display in some way that the given user has reconnected (as message history may have been lost and the users' chat may have been interrupted). If `<timestamp>` is given, clients SHOULD use this to display how much message history seems to have been lost.
+Upon receiving a `RESUMED` message, clients SHOULD display in some way that the given user has reconnected (as message history may have been lost and the users' chat may have been interrupted). Clients SHOULD use the timestamp to display how much message history seems to have been lost.
 
 
 ### BRB Messages
@@ -290,7 +290,7 @@ Right now, when clients detect that their connection to the server may have drop
 
 In addition, users sometimes manually reconnect when they see that there is lag on their connection. In these cases, clients may also wish to do the above rather than closing the connection and then reconnecting.
 
-When clients see a `RESUMED` message for another client which contains a timestamp, they can calculate how much time has passed since the timestamp and the current time and then display this next to the reconnect notice. Displaying this can assist users in knowing how much message history has been lost in private queries and channels.
+When clients see a `RESUMED` message for another client, they can calculate how much time has passed since the timestamp and the current time and then display this next to the reconnect notice. Displaying this can assist users in knowing how much message history has been lost in private queries and channels.
 
 A client that disconnects and reconnects to the server should explicitly display the reconnection, even if they're able to resume successfully. This is so that the user knows why they may be missing message history and similar issues.
 
