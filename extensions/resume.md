@@ -53,7 +53,7 @@ This command, sent from a client to a server, indicates that the client wishes t
 
 `<token>` is the old connection's resume token.
 
-`<timestamp>` is a timestamp indicating the last time at which the client was able to receive messages from the server on the old connection. This timestamp uses the same format as the IRCv3 `server-time` extension (i.e. `YYYY-MM-DDThh:mm:ss.sssZ`, or in UTC using extended format as specified by ISO 8601:2004(E) 4.3.2), and is passed to other clients to indicates how long the disconnection lasted.
+`<timestamp>` is a timestamp indicating the last time at which the client was able to receive messages from the server on the old connection. This timestamp uses the same format as the IRCv3 `server-time` extension (i.e. `YYYY-MM-DDThh:mm:ss.sssZ`, or in UTC using extended format as specified by ISO 8601:2004(E) 4.3.2), and is passed to other clients to indicates how long the disconnection lasted. Clients SHOULD request the `server-time` capability as an aid to calculating timestamps that agree with the server's timekeeping.
 
 If the request is successful, the server returns a `RESUME` message as described below, registration immediately completes, and the server begins replaying the current client state.
 
@@ -289,6 +289,8 @@ When reconnecting and intending to use `RESUME`, clients should first try to rec
 Right now, when clients detect that their connection to the server may have dropped they tend to send a `QUIT` command, close their current connection and then create a new connection to the server. In cases where the server supports resuming connections, clients may find it more useful to attempt to establish a new link to the server and resume the connection before closing their old one. If this is done, clients should be able to better take advantage of connection resumption.
 
 In addition, users sometimes manually reconnect when they see that there is lag on their connection. In these cases, clients may also wish to do the above rather than closing the connection and then reconnecting.
+
+Clients should use the `server-time` capability as an aid to producing timestamps. For example, they can simply use the server time of the last message they received, or possibly subtract a small delta from it.
 
 When clients see a `RESUMED` message for another client, they can calculate how much time has passed since the timestamp and the current time and then display this next to the reconnect notice. Displaying this can assist users in knowing how much message history has been lost in private queries and channels.
 
