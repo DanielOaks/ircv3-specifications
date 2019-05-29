@@ -63,6 +63,7 @@ If the request is unsuccessful, the server returns a `FAIL RESUME` message with 
 | ---- | ------ |
 | `INSECURE_SESSION` | `:<server> FAIL RESUME INSECURE_SESSION :Cannot resume connection, you are not connected with TLS` |
 | `INVALID_TOKEN` | `:<server> FAIL RESUME INVALID_TOKEN :Cannot resume connection, token is not valid` |
+| `INVALID_TIMESTAMP` | `:<server> FAIL RESUME INVALID_TIMESTAMP :Cannot resume connection, timestamp is not valid` |
 | `REGISTRATION_IS_COMPLETED` | `:<server> FAIL RESUME REGISTRATION_IS_COMPLETED :Cannot resume connection, connection registration has completed` |
 | `CANNOT_RESUME` | `:<server> FAIL RESUME CANNOT_RESUME :Cannot resume connection, for a different reason described here` |
 
