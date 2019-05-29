@@ -88,9 +88,11 @@ The second form is `RESUME SUCCESS`, sent to indicate that a `RESUME` request ha
 #### `RESUMED` Message
 This message is sent by the server to indicate that another client has reconnected:
 
-    :nick!user@oldhost RESUMED <host> [timestamp]
+    :nick!user@oldhost RESUMED <host> [status]
 
-`<nick>` and `<oldhost>` indicate the client that has reconnected, and are the details of the old client. `<host>` indicates the reconnecting client's new hostname, and the receiving client MUST process this information as they would from a regular [`CHGHOST`](https://ircv3.net/specs/extensions/chghost-3.2.html) message. `<timestamp>`, if given, is a timestamp of the form described above which indicates the last message received by the reconnecting clent.
+`<nick>` and `<oldhost>` indicate the client that has reconnected, and are the details of the old client. `<host>` indicates the reconnecting client's new hostname, and the receiving client MUST process this information as they would from a regular [`CHGHOST`](https://ircv3.net/specs/extensions/chghost-3.2.html) message.
+
+The `[status]` parameter is used to indicate the server's belief about how much history was lost. If it is the string `ok`, this means the server believes no history was lost, i.e., any messages that were missed will be replayed to the client. If it is a timestamp, then the client may have lost history messages that were sent between that time and the resumption. If it is omitted, then the client may have lost an unknown amount of history.
 
 Upon receiving a `RESUMED` message, clients SHOULD display in some way that the given user has reconnected (as message history may have been lost and the users' chat may have been interrupted). If `<timestamp>` is given, clients SHOULD use this to display how much message history seems to have been lost.
 
@@ -289,6 +291,8 @@ When reconnecting and intending to use `RESUME`, clients should first try to rec
 Right now, when clients detect that their connection to the server may have dropped they tend to send a `QUIT` command, close their current connection and then create a new connection to the server. In cases where the server supports resuming connections, clients may find it more useful to attempt to establish a new link to the server and resume the connection before closing their old one. If this is done, clients should be able to better take advantage of connection resumption.
 
 In addition, users sometimes manually reconnect when they see that there is lag on their connection. In these cases, clients may also wish to do the above rather than closing the connection and then reconnecting.
+
+If the server supports the `server-time` capability, clients should use those values to calculate their `RESUME` timestamp parameter. This provides greater resiliency against lag and clock skew between client and server.
 
 When clients see a `RESUMED` message for another client which contains a timestamp, they can calculate how much time has passed since the timestamp and the current time and then display this next to the reconnect notice. Displaying this can assist users in knowing how much message history has been lost in private queries and channels.
 
