@@ -96,6 +96,7 @@ The `[status]` parameter is used to indicate the server's belief about how much 
 
 Upon receiving a `RESUMED` message, clients SHOULD display in some way that the given user has reconnected (as message history may have been lost and the users' chat may have been interrupted). If `<timestamp>` is given, clients SHOULD use this to display how much message history seems to have been lost.
 
+As a substitute for the `RESUMED` message, if the server believes that history may have been lost, clients lacking the `draft/resume-0.4` capability MUST be sent consecutive `QUIT` and `JOIN` lines whose messages describe the reconnection; the messages SHOULD carry information about whether history was lost, and if so how much. However, if the server believes that no history was lost, it MAY either send `QUIT` and `JOIN` lines indicating this, or else send no notification at all.
 
 ### BRB Messages
 
